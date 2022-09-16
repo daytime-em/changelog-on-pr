@@ -1,0 +1,18 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: Test the action
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Generate some release notes
+        id: hello
+        uses: daytime-em/pr-releasenotes-action@main
+        with:
+          pull_number: 1
+      # Use the output from the `hello` step
+      - name: Just echo something
+        run: echo "Anything "
