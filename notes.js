@@ -14,8 +14,7 @@ async function fetchPr() {
 }
 
 async function main() {
-  console.log("Working on PR number " + prNumber)
-
+  console.log("Working on PR number " + prNumber())
 }
 
 main().catch(err => { core.setFailed(err.message) })

@@ -1,24 +1,23 @@
 {
   "name": "pr-releasenotes-action",
   "version": "0.0.1",
-  "description": "GitHub Action that generates release notes for PRs",
+  "description": "Action for generating notes for a Release PR workflow",
   "main": "notes.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daytime-em/pr-releasenotes-action.git"
+    "url": "git+https://github.com/daytime-em/release-notes-on-pr.git"
   },
   "author": "Emily Dixon",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/daytime-em/pr-releasenotes-action/issues"
+    "url": "https://github.com/daytime-em/release-notes-on-pr/issues"
   },
-  "homepage": "https://github.com/daytime-em/pr-releasenotes-action#readme",
+  "homepage": "https://github.com/daytime-em/release-notes-on-pr#readme",
   "dependencies": {
     "@actions/core": "^1.9.1",
-    "@actions/github": "^5.0.3",
-    "@actions/http-client": "^2.0.1"
+    "@actions/github": "^5.0.3"
   }
 }

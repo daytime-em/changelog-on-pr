@@ -5,14 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Test the action
     steps:
-
-      - uses: actions/checkout@v2
-
       - name: Generate some release notes
-        id: hello
-        uses: daytime-em/pr-releasenotes-action@main
+        id: notes
+        # You have to update this with your branch when developing. 
+        #   It doesn't look like you can use env, steps, or github contexts
+        #   for a uses:
+        uses: daytime-em/release-notes-on-pr@main
         with:
           pull_number: 1
-      # Use the output from the `hello` step
+      # TODO: Print the release notes, for easy debugging
       - name: Just echo something
         run: echo "Anything "
