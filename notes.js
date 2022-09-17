@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const { Client } = require('./httpClient');
+const { Client, defaultClient } = require('./httpClient');
 //const http = require('@actions/http-client');
 
 // Gets the PR number to be used for this run. If the user provides
@@ -30,7 +30,7 @@ function newHttpClient() {
 async function main() {
   console.log("Working on PR number " + prNumber())
 
-  var client = new Client()
+  var client = defaultClient
 
   // Fetch PR Commits
   // For each commit: Add the first line (regardless of length) to list of lines

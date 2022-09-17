@@ -1,6 +1,10 @@
 const { HttpClient, BearerCredentialHandler } = require('@actions/http-client')
 const core = require('@actions/core');
 
+function defaultClient() { 
+  return Client(null, null)
+}
+
 class Client {
 
   httpClient = this.newHttpClient()
