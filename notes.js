@@ -39,7 +39,7 @@ async function main() {
     repo,
     pull_number : pullNumber 
   })
-  console.log('Hey I downloaded a commit! ' + JSON.stringify(element))
+  console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
 
   // Fetch PR Commits
   // For each commit: Add the first line (regardless of length) to list of lines
