@@ -23,6 +23,9 @@ async function main() {
   let pullNumber = getPullNumber()
   console.log(">release-notes-on-pr: Working on PR number " + pullNumber)
 
+  console.log("owner is " + owner)
+  console.log("repo is " + repo)
+
   let pr = await octokit.rest.pulls.get({
     owner, 
     repo, 
