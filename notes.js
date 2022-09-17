@@ -49,5 +49,9 @@ async function main() {
 }
 
 main()
-  .catch(err => { core.setFailed(err.message) })
+  .catch(err => { 
+    console.log("Failed with error")
+    console.log(err)
+    core.setFailed(err.message) 
+  })
   .then(exit => { console.log("Finished with exit data: " + exit) })
