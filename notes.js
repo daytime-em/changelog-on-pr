@@ -1,11 +1,16 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+// TODO: Hey wait do I need this? I think so, getting commits requires diving in from URL
 const { Client, defaultClient } = require('./httpClient');
+
+const octokit = new github.getOctokit(core.getInput('token'))
+const owner = github.owner
+const repo = github.repo
 
 // Gets the PR number to be used for this run. If the user provides
 //  one via the 'pull_number' input, it should be used. otherwise,
 //  try to get a pull number out of a pull request on the event.
-function prNumber() {
+function pullNumber() {
   var manualNumber = core.getInput('pull_number')
   if (manualNumber) {
     return manualNumber
@@ -14,19 +19,19 @@ function prNumber() {
   }
 }
 
-// Fetches the PR from the Github API
-async function fetchPr(pullNumber) {
-}
-
-// Fetches the commits for a given pull request 
-async function fetchCommitsForPr(pullRequest) {
-
-}
-
 async function main() {
-  console.log("Working on PR number " + prNumber())
+  console.log("Working on PR number " + pullNumber())
+  let pullNumber = pullNumber()
 
-  var client = defaultClient
+  let commits = await octokit.rest.pulls.listCommits({
+    owner,
+    repo,
+    pullNumber
+  })
+
+  commits.array.forEach(element => {
+    console.log('Hey I downloaded a commit! ' + element)
+  });
 
   // Fetch PR Commits
   // For each commit: Add the first line (regardless of length) to list of lines
