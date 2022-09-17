@@ -30,6 +30,8 @@ function newHttpClient() {
 async function main() {
   console.log("Working on PR number " + prNumber())
 
+  var client = Client()
+
   // Fetch PR Commits
   // For each commit: Add the first line (regardless of length) to list of lines
   //  Catenate the lines, that's your output so set it
