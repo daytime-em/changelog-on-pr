@@ -1,7 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const { Client, defaultClient } = require('./httpClient');
-//const http = require('@actions/http-client');
 
 // Gets the PR number to be used for this run. If the user provides
 //  one via the 'pull_number' input, it should be used. otherwise,
@@ -22,9 +21,6 @@ async function fetchPr(pullNumber) {
 // Fetches the commits for a given pull request 
 async function fetchCommitsForPr(pullRequest) {
 
-}
-
-function newHttpClient() {
 }
 
 async function main() {
