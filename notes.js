@@ -22,6 +22,7 @@ async function fetchCommitsForPr(pullRequest) {
 
 async function main() {
   console.log("Working on PR number " + prNumber())
+  console.log(core.getInput('token'))
 
   // Fetch PR Commits
   // For each commit: Add the first line (regardless of length) to list of lines
