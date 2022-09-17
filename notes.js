@@ -30,14 +30,14 @@ async function main() {
   let pr = await octokit.rest.pulls.get({
     owner, 
     repo, 
-    pullNumber
+    pull_number : pullNumber 
   })
   console.log('I got a PR ' + pr)
 
   let commits = await octokit.rest.pulls.listCommits({
     owner,
     repo,
-    pullNumber
+    pull_number : pullNumber 
   })
   commits.array.forEach(element => {
     console.log('Hey I downloaded a commit! ' + element)
