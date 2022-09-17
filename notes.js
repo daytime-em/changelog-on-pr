@@ -15,11 +15,6 @@ function prNumber() {
   }
 }
 
-// Gets the auth token supplied by the user via the 'token' input
-function getAuthToken() {
-  return core.getInput('token')
-}
-
 // Fetches the PR from the Github API
 async function fetchPr(pullNumber) {
 }
