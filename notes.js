@@ -23,12 +23,18 @@ async function main() {
   let pullNumber = getPullNumber()
   console.log(">release-notes-on-pr: Working on PR number " + pullNumber)
 
+  let pr = await octokit.rest.pulls.get({
+    owner, 
+    repo, 
+    pullNumber
+  })
+  console.log('I got a PR ' + pr)
+
   let commits = await octokit.rest.pulls.listCommits({
     owner,
     repo,
     pullNumber
   })
-
   commits.array.forEach(element => {
     console.log('Hey I downloaded a commit! ' + element)
   });
