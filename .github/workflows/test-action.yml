@@ -13,8 +13,7 @@ jobs:
         uses: daytime-em/release-notes-on-pr@get-pr
         with:
           pull_number: 1
-          #token: ${{ env.GITHUB_TOKEN }}
-          token: ASAKSFHAKJFHKJ
+          token: ${{ secrets.GITHUB_TOKEN }}
       # TODO: Print the release notes, for easy debugging
       - name: Just echo something
         run: echo "Anything "
