@@ -32,14 +32,14 @@ async function main() {
     repo, 
     pull_number : pullNumber 
   })
-  console.log('I got a PR ' + pr)
+  console.log('I got a PR ' + JSON.stringify(pr))
 
   let commits = await octokit.rest.pulls.listCommits({
     owner,
     repo,
     pull_number : pullNumber 
   })
-  commits.array.forEach(element => {
+  commits.forEach(element => {
     console.log('Hey I downloaded a commit! ' + element)
   });
 
