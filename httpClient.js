@@ -8,11 +8,7 @@ class Client {
   constructor() {
     this(
       () => { new BearerCredentialHandler(core.getInput('token')) },
-      (authHandler) => {
-        new HttpClient(
-          "release-notes-generator", [authHandler]
-        )
-      }
+      (authHandler) => { new HttpClient("release-notes-generator", [authHandler]) }
     )
   }
 
