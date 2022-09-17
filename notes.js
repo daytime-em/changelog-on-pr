@@ -10,7 +10,7 @@ const repo = github.repo
 // Gets the PR number to be used for this run. If the user provides
 //  one via the 'pull_number' input, it should be used. otherwise,
 //  try to get a pull number out of a pull request on the event.
-function pullNumber() {
+function getPullNumber() {
   var manualNumber = core.getInput('pull_number')
   if (manualNumber) {
     return manualNumber
@@ -20,8 +20,8 @@ function pullNumber() {
 }
 
 async function main() {
-  console.log("Working on PR number " + pullNumber())
-  let pullNumber = pullNumber()
+  let pullNumber = getPullNumber()
+  console.log(">release-notes-on-pr: Working on PR number " + pullNumber)
 
   let commits = await octokit.rest.pulls.listCommits({
     owner,
