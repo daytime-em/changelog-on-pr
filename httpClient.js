@@ -5,14 +5,13 @@ class Client {
 
   httpClient = this.newHttpClient()
 
-  constructor() {
-    this(
-      () => { new BearerCredentialHandler(core.getInput('token')) },
-      (authHandler) => { new HttpClient("release-notes-generator", [authHandler]) }
-    )
-  }
-
-  constructor(authHandlerFunc, httpClientFunc) {
-    this.httpClient = httpClientFunc(authHandlerFunc())
+  constructor(authHandlerFn, clientFn) {
+    if (!authHandlerFn) {
+      var authHandlerFn = () => { new BearerCredentialHandler(core.getInput('token')) }
+    }
+    if (!clientFn) {
+      var clientFn = (authHandler) => { new HttpClient("release-notes-generator", [authHandler]) }
+    }
+    this.httpClient = clientFn(authHandlerFn())
   }
 }
