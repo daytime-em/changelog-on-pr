@@ -4,8 +4,8 @@ const github = require('@actions/github');
 const { Client, defaultClient } = require('./httpClient');
 
 const octokit = new github.getOctokit(core.getInput('token'))
-const owner = github.owner
-const repo = github.repo
+const owner = github.context.payload.repository.owner.login
+const repo = github.payload.repository.name
 
 // Gets the PR number to be used for this run. If the user provides
 //  one via the 'pull_number' input, it should be used. otherwise,
