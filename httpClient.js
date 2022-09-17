@@ -1,7 +1,6 @@
-const http = require('@actions/http-client')
-import { HttpClient, BearerCredentialHandler } from '@actions/http-client'
+const { HttpClient, BearerCredentialHandler } = require('@actions/http-client')
 
-export class HttpClient {
+export class Client {
 
 }
 

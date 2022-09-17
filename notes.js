@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const { Client } = require('./httpClient');
 //const http = require('@actions/http-client');
-import { HttpClient } from './httpClient'
 
 // Gets the PR number to be used for this run. If the user provides
 //  one via the 'pull_number' input, it should be used. otherwise,
