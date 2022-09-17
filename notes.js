@@ -20,6 +20,7 @@ function getPullNumber() {
 }
 
 async function main() {
+  console.log("just making sure, gh token is " + core.getInput('token'))
   let pullNumber = getPullNumber()
   console.log(">release-notes-on-pr: Working on PR number " + pullNumber)
 
