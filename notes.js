@@ -17,6 +17,16 @@ function getPullNumber() {
   }
 }
 
+function createChangelog(commitMessages) {
+  // it would be cool would be to sort this by PR label (pr number from the #x at the end)
+  const header = "## Improvements"
+
+  var body = header + "\n\n"
+  commitMessages.forEach(msg => { body += "* " + msg + "\n"})
+  
+  return body
+}
+
 async function main() {
   let pullNumber = getPullNumber()
   console.log(">release-notes-on-pr: Working on PR number " + pullNumber)
@@ -36,6 +46,9 @@ async function main() {
   )
   let commitMessages = commits.map(element => { return element.commit.message })
   commitMessages.forEach(msg => { console.log('found message ' + msg) })
+
+  let changelog = createChangelog(commitMessages)
+  console.log("Changelog:\n" + changelog)
 
   // Fetch PR Commits
   // For each commit: Add the first line (regardless of length) to list of lines
