@@ -8,9 +8,9 @@ inputs:
   token:
     description: "A GITHUB_TOKEN or Personal Access Token that is scoped to allow editing pull requests"
     required: true
-# outputs:
-  # notes:
-    # description: The generated release notes, as added to the PR body
+  labels:
+    description: "A comma-delimited list of labels that should be used as headings. If none are provided, changes will be labeled as 'Improvements'"
+    required: false
 runs:
   using: 'node16'
   main: 'notes.js'

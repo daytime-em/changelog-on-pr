@@ -14,13 +14,66 @@ function getPullNumber() {
   }
 }
 
-function createChangelog(commitMessages) {
+async function labelsOnPr(pull_number) {
+  let pr = await octokit.rest.pulls.get({
+    owner,
+    repo,
+    pull_number
+  })
+  return pr.data.labels.map(label => { return label.name })
+}
+
+// Returns a map containing lists of change messages keyed by label/heading
+async function changesByLabel(commitMessages) {
+  var messagesByLabel = new Map() // label:[message1, message2, ...]
+  let headingLabels = core.getInput('labels').split(',')
+
+  commitMessages.forEach(async commitMsg => {
+    var added = false
+
+    // If there's a reference to a pull request
+    if (commitMsg.match(/#\d+/)) {
+      let prLabels = await labelsOnPr(commitMsg.match(/#(\d+)/)[0])
+      prLabels.forEach(prLabel => {
+        if (headingLabels.includes(prLabel)) {
+          appendMessageByLabel(messagesByLabel, prLabel, commitMsg)
+          added = true
+        }
+      })
+    } 
+    if (!added) {
+      appendMessageByLabel(messagesByLabel, "improvements", commitMsg)
+    }
+  }) // commitMessages.forEach(...
+
+  messagesByLabel.keys.forEach(key => {
+    let values = messagesByLabel.get(key)
+    values.forEach(value => {
+      console.log(key + " : " + value)
+    })
+  })
+}
+
+function appendMessageByLabel(messagesByLabel, label, message) {
+  if (!messagesByLabel.has(label)) {
+    messagesByLabel.put(label, [message])
+  } else {
+    let messages = messagesByLabel.get(label)
+    messages += message
+    messagesByLabel.put(label, messages)
+  }
+}
+
+async function createChangelog(commitMessages) {
   // it would be cool would be to sort into different headings by PR label (pr number from the #x at the end)
   const header = "## Improvements"
 
   var body = header + "\n\n"
   commitMessages.map(msg => { return msg.split('\n')[0] })
     .forEach(msg => { body += "* " + msg + "\n" })
+
+  // new way
+  await changesByLabel(commitMessages)
 
   return body
 }
