@@ -73,18 +73,25 @@ async function createChangelog(commitMessages) {
   let changes = await changesByLabel(commitMessages)
   var body = ""
 
-  for (const key of (getHeadingLabels() + "improvements")) {
+  for (const key of getHeadingLabels()) {
     let value = changes.get(key)
-
-    body += "## "
-    body += capitalize(key)
-    body += "\n\n"
-    body += value
-    body += "\n\n"
+    body += formattedCategory(key, value)
   }
+  body += formattedCategory("improvements", changes.get("improvements"))
 
   return body
 }
+
+function formattedCategory(key, value) {
+  let body = ""
+  body += "## "
+  body += capitalize(key)
+  body += "\n\n"
+  body += value
+  body += "\n\n"
+  return body
+}
+
 
 async function main() {
   let pullNumber = getPullNumber()
