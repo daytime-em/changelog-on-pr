@@ -41,11 +41,12 @@ async function main() {
   })
   console.log('Parsed data is ' + commits.data)
   commits.data.forEach(element => {
-    console.log('element ' + element)
-    console.log('element JSONned ' + JSON.stringify(element))
-    console.log('')
+    //console.log('element ' + element)
+    //console.log('element JSONned ' + JSON.stringify(element))
+    //console.log('')
+    console.log('Commit: ' + element.commit.message)
   });
-  console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
+  //console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
 
   // Fetch PR Commits
   // For each commit: Add the first line (regardless of length) to list of lines
