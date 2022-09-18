@@ -22,7 +22,7 @@ function createChangelog(commitMessages) {
   const header = "## Improvements"
 
   var body = header + "\n\n"
-  commitMessages.map(msg => { msg.split('\n')[0] })
+  commitMessages.map(msg => { return msg.split('\n')[0] })
     .forEach(msg => { body += "* " + msg + "\n" })
 
   return body
