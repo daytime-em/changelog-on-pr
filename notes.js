@@ -28,23 +28,24 @@ async function main() {
   console.log("repo is " + repo)
 
   let pr = await octokit.rest.pulls.get({
-    owner, 
-    repo, 
-    pull_number : pullNumber 
+    owner,
+    repo,
+    pull_number: pullNumber
   })
   //console.log('I got a PR ' + JSON.stringify(pr))
 
   let commits = await octokit.rest.pulls.listCommits({
     owner,
     repo,
-    pull_number : pullNumber 
+    pull_number: pullNumber
   })
-  console.log('Parsed data is ' + commits.data)
+  let commitMessages = commits.data.map(element => { element.commit.message })
+  commitMessages.forEach(msg => { console.log('message ' + msg) })
   commits.data.forEach(element => {
     //console.log('element ' + element)
     //console.log('element JSONned ' + JSON.stringify(element))
     //console.log('')
-    console.log('Commit: ' + element.commit.message)
+    //console.log('Commit: ' + element.commit.message)
   });
   //console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
 
@@ -55,9 +56,9 @@ async function main() {
 }
 
 main()
-  .catch(err => { 
+  .catch(err => {
     console.log("Failed with error")
     console.log(err)
-    core.setFailed(err.message) 
+    core.setFailed(err.message)
   })
   .then(exit => { console.log("Finished with exit data: " + exit) })
