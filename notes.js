@@ -38,7 +38,7 @@ async function main() {
     owner,
     repo,
     pull_number : pullNumber 
-  })
+  }).data
   console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
 
   // Fetch PR Commits
