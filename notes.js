@@ -24,7 +24,7 @@ async function labelsOnPr(pull_number) {
     repo,
     pull_number
   })
-  return pr.data.labels.map(label => { return label.name })
+  return pr.data.labels.map(label => { return label.name.toLowerCase() })
 }
 
 // Returns a map containing lists of change messages keyed by label/heading
@@ -73,7 +73,7 @@ async function createChangelog(commitMessages) {
   let changes = await changesByLabel(commitMessages)
   var body = ""
 
-  for (const key of changes.keys()) {
+  for (const key of getHeadingLabels()) {
     let value = changes.get(key)
 
     body += "## "
