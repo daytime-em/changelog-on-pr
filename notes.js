@@ -54,19 +54,20 @@ async function changesByLabel(commitMessages) {
 
   for (const key of messagesByLabel.keys()) {
     let values = messagesByLabel.get(key)
-    for (const value of values) {
-      console.log(key + " : " + value)
-    }
+    console.log(key + "\n\n" + values)
+    //for (const value of values) {
+    //  console.log(key + " : " + value)
+    //}
   }
 }
 
 function appendMessageByLabel(messagesByLabel, label, message) {
   if (!messagesByLabel.has(label)) {
-    messagesByLabel.set(label, [message])
+    messagesByLabel.set(label, "*" + message)
   } else {
     let messages = messagesByLabel.get(label)
     console.log('already had ' + messages)
-    messagesByLabel.set(label, messages + [message])
+    messagesByLabel.set(label, messages + "\n* " + message)
   }
 }
 
