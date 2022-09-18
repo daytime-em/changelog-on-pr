@@ -31,16 +31,20 @@ async function changesByLabel(commitMessages) {
   commitMessages.forEach(async commitMsg => {
     var added = false
 
+    console.log('\t--- For msg ' + commitMsg)
+
     // If there's a reference to a pull request
     if (commitMsg.match(/#\d+/)) {
       let prLabels = await labelsOnPr(commitMsg.match(/#(\d+)/)[0])
+      console.log('prLabels ' + prLabels)
+
       prLabels.forEach(prLabel => {
         if (headingLabels.includes(prLabel)) {
           appendMessageByLabel(messagesByLabel, prLabel, commitMsg)
           added = true
         }
       })
-    } 
+    }
 
     if (!added) {
       appendMessageByLabel(messagesByLabel, "improvements", commitMsg)
@@ -49,7 +53,7 @@ async function changesByLabel(commitMessages) {
 
   for (const key of messagesByLabel.keys()) {
     let values = messagesByLabel.get(key)
-    for(const value of values) {
+    for (const value of values) {
       console.log(key + " : " + value)
     }
   }

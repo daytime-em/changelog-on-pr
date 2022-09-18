@@ -11,6 +11,7 @@ inputs:
   labels:
     description: "A comma-delimited list of labels that should be used as headings. If none are provided, changes will be labeled as 'Improvements'"
     required: false
+    default: ""
 runs:
   using: 'node16'
   main: 'notes.js'
