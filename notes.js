@@ -62,11 +62,11 @@ async function changesByLabel(commitMessages) {
 
 function appendMessageByLabel(messagesByLabel, label, message) {
   if (!messagesByLabel.has(label)) {
-    messagesByLabel.set(label, [].concat(message))
+    messagesByLabel.set(label, [message])
   } else {
     let messages = messagesByLabel.get(label)
     console.log('already had ' + messages)
-    messagesByLabel.set(label, messages.concat(message))
+    messagesByLabel.set(label, messages + [message])
   }
 }
 
