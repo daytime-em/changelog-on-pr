@@ -46,7 +46,7 @@ async function changesByLabel(commitMessages) {
     if (!added) {
       appendMessageByLabel(messagesByLabel, "improvements", commitMsg)
     }
-  }) // commitMessages.forEach(...
+  }) // commitMessages.forEach(...asdlkj
 
   return messagesByLabel
 }
