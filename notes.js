@@ -46,7 +46,7 @@ async function changesByLabel(commitMessages) {
     }
   }) // commitMessages.forEach(...
 
-  messagesByLabel.keys.forEach(key => {
+  messagesByLabel.keys().forEach(key => {
     let values = messagesByLabel.get(key)
     values.forEach(value => {
       console.log(key + " : " + value)
