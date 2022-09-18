@@ -31,7 +31,7 @@ async function changesByLabel(commitMessages) {
   commitMessages.forEach(async commitMsg => {
     var added = false
 
-    // If there's a reference to a pull request
+    // If there's a reference to a pull request.........
     if (commitMsg.match(/#\d+/)) {
       let prLabels = await labelsOnPr(commitMsg.match(/#(\d+)/)[0])
 
