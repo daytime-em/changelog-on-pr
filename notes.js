@@ -77,11 +77,11 @@ async function createChangelog(commitMessages) {
   //.forEach(msg => { body += "* " + msg + "\n" })
 
   // new way
-  let changesByLabel = await changesByLabel(commitMessages)
+  let changes = await changesByLabel(commitMessages)
   var body = ""
 
-  for (const key of changesByLabel.keys()) {
-    let value = changesByLabel.get(key)
+  for (const key of changes.keys()) {
+    let value = changes.get(key)
     console.log(key + "\n\n" + value)
 
     body += "## "
