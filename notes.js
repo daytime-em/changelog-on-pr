@@ -38,7 +38,10 @@ async function main() {
     owner,
     repo,
     pull_number : pullNumber 
-  }).data
+  })
+  let l = JSON.parse(commits)
+  console.log('Parsed the object ' + l)
+  console.log('Parsed data is ' + l.data)
   console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
 
   // Fetch PR Commits
