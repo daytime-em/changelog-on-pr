@@ -31,12 +31,6 @@ async function main() {
   let pullNumber = getPullNumber()
   console.log(">release-notes-on-pr: Working on PR number " + pullNumber)
 
-  let pr = await octokit.rest.pulls.get({
-    owner,
-    repo,
-    pull_number: pullNumber
-  })
-
   let commits = await octokit.paginate( 
     octokit.rest.pulls.listCommits, {
       owner,
@@ -45,15 +39,24 @@ async function main() {
     } 
   )
   let commitMessages = commits.map(element => { return element.commit.message })
-  commitMessages.forEach(msg => { console.log('found message ' + msg) })
-
   let changelog = createChangelog(commitMessages)
-  console.log("Changelog:\n" + changelog)
 
-  // Fetch PR Commits
-  // For each commit: Add the first line (regardless of length) to list of lines
-  //  Catenate the lines, that's your output so set it
-  // use the GitHub API to get the release notes, append ours to the end then push back up
+  console.log("Adding Changelog:\n" + changelog)
+  
+  // Append to what's already in there
+  let pr = await octokit.rest.pulls.get({
+    owner,
+    repo,
+    pull_number: pullNumber
+  })
+  var body = pr.body + "\n\n" + changelog
+
+  await octokit.rest.pulls.update({
+    owner,
+    repo,
+    pull_number: pullNumber,
+    body
+  })
 }
 
 main()
