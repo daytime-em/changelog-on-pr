@@ -44,8 +44,8 @@ async function main() {
   commits.data.forEach(element => {
     //console.log('element ' + element)
     //console.log('element JSONned ' + JSON.stringify(element))
-    //console.log('')
-    //console.log('Commit: ' + element.commit.message)
+    console.log('Commit: ' + element.commit.message)
+    console.log('')
   });
   //console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
 
@@ -61,4 +61,4 @@ main()
     console.log(err)
     core.setFailed(err.message)
   })
-  .then(exit => { console.log("Finished with exit data: " + exit) })
+  .then(exit => { console.log("Done!" + exit) })
