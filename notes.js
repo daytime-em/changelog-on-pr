@@ -22,8 +22,9 @@ function createChangelog(commitMessages) {
   const header = "## Improvements"
 
   var body = header + "\n\n"
-  commitMessages.forEach(msg => { body += "* " + msg + "\n"})
-  
+  commitMessages.map(msg => { msg.split('\n')[0] })
+    .forEach(msg => { body += "* " + msg + "\n" })
+
   return body
 }
 
@@ -31,18 +32,18 @@ async function main() {
   let pullNumber = getPullNumber()
   console.log(">release-notes-on-pr: Working on PR number " + pullNumber)
 
-  let commits = await octokit.paginate( 
+  let commits = await octokit.paginate(
     octokit.rest.pulls.listCommits, {
-      owner,
-      repo,
-      pull_number: pullNumber
-    } 
+    owner,
+    repo,
+    pull_number: pullNumber
+  }
   )
   let commitMessages = commits.map(element => { return element.commit.message })
   let changelog = createChangelog(commitMessages)
 
   console.log("Adding Changelog:\n" + changelog)
-  
+
   // Append to what's already in there
   let pr = await octokit.rest.pulls.get({
     owner,
@@ -50,7 +51,7 @@ async function main() {
     pull_number: pullNumber
   })
   var body
-  if(pr.body) {
+  if (pr.body) {
     body = pr.body + "\n\n" + changelog
   } else {
     body = changelog
