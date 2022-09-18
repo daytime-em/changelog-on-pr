@@ -52,35 +52,43 @@ async function changesByLabel(commitMessages) {
     }
   }) // commitMessages.forEach(...
 
-  for (const key of messagesByLabel.keys()) {
-    let values = messagesByLabel.get(key)
-    console.log(key + "\n\n" + values)
-    //for (const value of values) {
-    //  console.log(key + " : " + value)
-    //}
-  }
+  return messagesByLabel
 }
 
 function appendMessageByLabel(messagesByLabel, label, message) {
   if (!messagesByLabel.has(label)) {
-    messagesByLabel.set(label, "*" + message)
+    messagesByLabel.set(label, "* " + message)
   } else {
     let messages = messagesByLabel.get(label)
-    console.log('already had ' + messages)
     messagesByLabel.set(label, messages + "\n* " + message)
   }
 }
 
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 async function createChangelog(commitMessages) {
   // it would be cool would be to sort into different headings by PR label (pr number from the #x at the end)
-  const header = "## Improvements"
+  //const header = "## Improvements"
 
-  var body = header + "\n\n"
-  commitMessages.map(msg => { return msg.split('\n')[0] })
-    .forEach(msg => { body += "* " + msg + "\n" })
+  //var body = header + "\n\n"
+  //commitMessages.map(msg => { return msg.split('\n')[0] })
+  //.forEach(msg => { body += "* " + msg + "\n" })
 
   // new way
-  await changesByLabel(commitMessages)
+  let changesByLabel = await changesByLabel(commitMessages)
+  var body = ""
+
+  for (const key of changesByLabel.keys()) {
+    let value = changesByLabel.get(key)
+    console.log(key + "\n\n" + value)
+
+    body += "## "
+    body += capitalize(key)
+    body += "\n\n"
+    body += value
+  }
 
   return body
 }
