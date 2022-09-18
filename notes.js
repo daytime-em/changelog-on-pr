@@ -48,8 +48,8 @@ async function main() {
   })
   console.log("pr response is " + JSON.stringify(pr))
   var body
-  if (pr.body) {
-    body = pr.body + "\n\n" + changelog
+  if (pr.data.body) {
+    body = pr.data.body + "\n\n" + changelog
   } else {
     body = changelog
   }
