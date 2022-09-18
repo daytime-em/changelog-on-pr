@@ -14,6 +14,10 @@ function getPullNumber() {
   }
 }
 
+function getHeadingLabels() {
+  return core.getInput('labels').split(',')
+}
+
 async function labelsOnPr(pull_number) {
   let pr = await octokit.rest.pulls.get({
     owner,
@@ -26,7 +30,7 @@ async function labelsOnPr(pull_number) {
 // Returns a map containing lists of change messages keyed by label/heading
 async function changesByLabel(commitMessages) {
   var messagesByLabel = new Map() // label:[message1, message2, ...]
-  let headingLabels = core.getInput('labels').split(',')
+  let headingLabels = getHeadingLabels()
 
   for (const commitMsg of commitMessages) {
     var added = false
