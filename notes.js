@@ -46,10 +46,8 @@ async function main() {
       pull_number: pullNumber
     } 
   )
-  console.log('paginated commit list ' + commits)
-  let commitMessages = commits.data.map(element => { return element.commit.message })
+  let commitMessages = commits.map(element => { return element.commit.message })
   commitMessages.forEach(msg => { console.log('found message ' + msg) })
-  //console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
 
   // Fetch PR Commits
   // For each commit: Add the first line (regardless of length) to list of lines
