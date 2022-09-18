@@ -66,8 +66,7 @@ function appendMessageByLabel(messagesByLabel, label, message) {
   } else {
     let messages = messagesByLabel.get(label)
     console.log('already had ' + messages)
-    messages.concat(message)
-    messagesByLabel.set(label, messages)
+    messagesByLabel.set(label, messages.concat(message))
   }
 }
 
