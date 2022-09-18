@@ -1,7 +1,5 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-// TODO: Hey wait do I need this? I think so, getting commits requires diving in from URL
-const { Client, defaultClient } = require('./httpClient');
 
 const octokit = new github.getOctokit(core.getInput('token'))
 const owner = github.context.payload.repository.owner.login
@@ -20,25 +18,15 @@ function getPullNumber() {
 }
 
 async function main() {
-  console.log("just making sure, gh token is " + core.getInput('token'))
   let pullNumber = getPullNumber()
   console.log(">release-notes-on-pr: Working on PR number " + pullNumber)
-
-  console.log("owner is " + owner)
-  console.log("repo is " + repo)
 
   let pr = await octokit.rest.pulls.get({
     owner,
     repo,
     pull_number: pullNumber
   })
-  //console.log('I got a PR ' + JSON.stringify(pr))
 
-  //let commits = await octokit.rest.pulls.listCommits({
-  //  owner,
-  //  repo,
-  //  pull_number: pullNumber
-  //})
   let commits = await octokit.paginate( 
     octokit.rest.pulls.listCommits, {
       owner,
@@ -61,4 +49,4 @@ main()
     console.log(err)
     core.setFailed(err.message)
   })
-  .then(exit => { console.log("Done!" + exit) })
+  .then(() => { console.log("Done! ") })
