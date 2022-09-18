@@ -14,16 +14,84 @@ function getPullNumber() {
   }
 }
 
-function createChangelog(commitMessages) {
-  // it would be cool would be to sort into different headings by PR label (pr number from the #x at the end)
-  const header = "## Improvements"
+function getHeadingLabels() {
+  return core.getInput('labels').split(',')
+}
 
-  var body = header + "\n\n"
-  commitMessages.map(msg => { return msg.split('\n')[0] })
-    .forEach(msg => { body += "* " + msg + "\n" })
+async function labelsOnPr(pull_number) {
+  let pr = await octokit.rest.pulls.get({
+    owner,
+    repo,
+    pull_number
+  })
+  return pr.data.labels.map(label => { return label.name.toLowerCase() })
+}
+
+// Returns a map containing lists of change messages keyed by label/heading
+async function changesByLabel(commitMessages) {
+  var messagesByLabel = new Map() // label:[message1, message2, ...]
+  let headingLabels = getHeadingLabels()
+
+  for (const commitMsg of commitMessages) {
+    var added = false
+
+    // If there's a reference to a pull request
+    if (commitMsg.match(/#\d+/)) {
+      let prLabels = await labelsOnPr(commitMsg.match(/#(\d+)/)[1])
+      console.log("pr labels " + prLabels)
+
+      prLabels.forEach(prLabel => {
+        if (headingLabels.includes(prLabel)) {
+          appendMessageByLabel(messagesByLabel, prLabel, commitMsg)
+          added = true
+        }
+      })
+    }
+
+    if (!added) {
+      appendMessageByLabel(messagesByLabel, "improvements", commitMsg)
+    }
+  } // for (... of commitMessages)
+
+  return messagesByLabel
+}
+
+function appendMessageByLabel(messagesByLabel, label, message) {
+  if (!messagesByLabel.has(label)) {
+    messagesByLabel.set(label, "* " + message)
+  } else {
+    let messages = messagesByLabel.get(label)
+    messagesByLabel.set(label, messages + "\n* " + message)
+  }
+}
+
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+async function createChangelog(commitMessages) {
+  let changes = await changesByLabel(commitMessages)
+  var body = ""
+
+  for (const key of getHeadingLabels()) {
+    let value = changes.get(key)
+    body += formattedCategory(key, value)
+  }
+  body += formattedCategory("improvements", changes.get("improvements"))
 
   return body
 }
+
+function formattedCategory(key, value) {
+  let body = ""
+  body += "## "
+  body += capitalize(key)
+  body += "\n\n"
+  body += value
+  body += "\n\n"
+  return body
+}
+
 
 async function main() {
   let pullNumber = getPullNumber()
@@ -37,7 +105,7 @@ async function main() {
     pull_number: pullNumber
   })
   let commitMessages = commits.map(element => { return element.commit.message })
-  let changelog = createChangelog(commitMessages)
+  let changelog = await createChangelog(commitMessages)
 
   console.log("Adding Changelog:\n" + changelog)
 
