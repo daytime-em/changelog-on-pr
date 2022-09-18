@@ -40,6 +40,11 @@ async function main() {
     pull_number : pullNumber 
   })
   console.log('Parsed data is ' + commits.data)
+  commits.data.forEach(element => {
+    console.log('element ' + element)
+    console.log('element JSONned ' + JSON.stringify(element))
+    console.log('')
+  });
   console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
 
   // Fetch PR Commits
