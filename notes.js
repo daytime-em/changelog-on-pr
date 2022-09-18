@@ -47,6 +47,7 @@ async function changesByLabel(commitMessages) {
     }
 
     if (!added) {
+      console.log('adding as improvement')
       appendMessageByLabel(messagesByLabel, "improvements", commitMsg)
     }
   }) // commitMessages.forEach(...
@@ -64,6 +65,7 @@ function appendMessageByLabel(messagesByLabel, label, message) {
     messagesByLabel.set(label, [message])
   } else {
     let messages = messagesByLabel.get(label)
+    console.log('already had ' + messages)
     messages += message
     messagesByLabel.set(label, messages)
   }
