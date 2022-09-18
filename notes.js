@@ -28,7 +28,7 @@ async function changesByLabel(commitMessages) {
   var messagesByLabel = new Map() // label:[message1, message2, ...]
   let headingLabels = core.getInput('labels').split(',')
 
-  commitMessages.forEach(async commitMsg => {
+  await commitMessages.forEach(async commitMsg => {
     var added = false
 
     // If there's a reference to a pull request
