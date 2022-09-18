@@ -13,6 +13,6 @@ jobs:
         uses: daytime-em/release-notes-on-pr@main
         with:
           pull_number: 1
-      # TODO: Print the release notes, for easy debugging
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Just echo something
         run: echo "Anything "

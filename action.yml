@@ -5,6 +5,9 @@ inputs:
     description: "The number of the PR to generate notes for. You only need to specify this if you're calling from an event other than pull_request"
     required: true
     default: ${{ github.event.pull_request.number }}
+  token:
+    description: "A GITHUB_TOKEN or Personal Access Token that is scoped to allow editing pull requests"
+    required: true
 # outputs:
   # notes:
     # description: The generated release notes, as added to the PR body
