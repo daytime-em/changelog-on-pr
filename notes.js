@@ -29,6 +29,7 @@ async function main() {
   let pullNumber = getPullNumber()
   console.log(">release-notes-on-pr: Working on PR number " + pullNumber)
 
+  // Create formatted changelog string from commits
   let commits = await octokit.paginate(
     octokit.rest.pulls.listCommits, {
     owner,
@@ -46,7 +47,6 @@ async function main() {
     repo,
     pull_number: pullNumber
   })
-  console.log("pr response is " + JSON.stringify(pr))
   var body
   if (pr.data.body) {
     body = pr.data.body + "\n\n" + changelog
@@ -54,6 +54,7 @@ async function main() {
     body = changelog
   }
 
+  // Update the PR
   await octokit.rest.pulls.update({
     owner,
     repo,
