@@ -15,6 +15,7 @@ function getPullNumber() {
 }
 
 async function labelsOnPr(pull_number) {
+  console.log("labels for PR " + pull_number)
   let pr = await octokit.rest.pulls.get({
     owner,
     repo,
