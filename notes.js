@@ -49,9 +49,9 @@ async function changesByLabel(commitMessages) {
 
   for (const key of messagesByLabel.keys()) {
     let values = messagesByLabel.get(key)
-    values.forEach(value => {
+    for(const value of values) {
       console.log(key + " : " + value)
-    })
+    }
   }
 }
 
