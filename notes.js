@@ -5,9 +5,6 @@ const octokit = new github.getOctokit(core.getInput('token'))
 const owner = github.context.payload.repository.owner.login
 const repo = github.context.payload.repository.name
 
-// Gets the PR number to be used for this run. If the user provides
-//  one via the 'pull_number' input, it should be used. otherwise,
-//  try to get a pull number out of a pull request on the event.
 function getPullNumber() {
   var manualNumber = core.getInput('pull_number')
   if (manualNumber) {
@@ -18,7 +15,7 @@ function getPullNumber() {
 }
 
 function createChangelog(commitMessages) {
-  // it would be cool would be to sort this by PR label (pr number from the #x at the end)
+  // it would be cool would be to sort into different headings by PR label (pr number from the #x at the end)
   const header = "## Improvements"
 
   var body = header + "\n\n"
@@ -37,14 +34,13 @@ async function main() {
     owner,
     repo,
     pull_number: pullNumber
-  }
-  )
+  })
   let commitMessages = commits.map(element => { return element.commit.message })
   let changelog = createChangelog(commitMessages)
 
   console.log("Adding Changelog:\n" + changelog)
 
-  // Append to what's already in there
+  // Append the changelog to what's already in there
   let pr = await octokit.rest.pulls.get({
     owner,
     repo,
