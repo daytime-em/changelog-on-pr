@@ -6,7 +6,7 @@ const owner = github.context.payload.repository.owner.login
 const repo = github.context.payload.repository.name
 
 function getPullNumber() {
-  var manualNumber = core.getInsetput('pull_number')
+  var manualNumber = core.getInput('pull_number')
   if (manualNumber) {
     return manualNumber
   } else {
