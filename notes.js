@@ -39,13 +39,12 @@ async function main() {
     repo,
     pull_number: pullNumber
   })
-  let commitMessages = commits.data.map(element => { element.commit.message })
+  let commitMessages = commits.data.map(element => { return element.commit.message })
   commitMessages.forEach(msg => { console.log('message ' + msg) })
   commits.data.forEach(element => {
     //console.log('element ' + element)
     //console.log('element JSONned ' + JSON.stringify(element))
     console.log('Commit: ' + element.commit.message)
-    console.log('')
   });
   //console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
 
