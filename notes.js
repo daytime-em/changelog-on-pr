@@ -32,7 +32,7 @@ async function main() {
     repo, 
     pull_number : pullNumber 
   })
-  console.log('I got a PR ' + JSON.stringify(pr))
+  //console.log('I got a PR ' + JSON.stringify(pr))
 
   let commits = await octokit.rest.pulls.listCommits({
     owner,
