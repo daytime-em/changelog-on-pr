@@ -73,7 +73,7 @@ async function createChangelog(commitMessages) {
   let changes = await changesByLabel(commitMessages)
   var body = ""
 
-  for (const key of getHeadingLabels()) {
+  for (const key of (getHeadingLabels() + "improvements")) {
     let value = changes.get(key)
 
     body += "## "
