@@ -15,7 +15,6 @@ function getPullNumber() {
 }
 
 async function labelsOnPr(pull_number) {
-  console.log("labels for PR " + pull_number)
   let pr = await octokit.rest.pulls.get({
     owner,
     repo,
@@ -35,6 +34,7 @@ async function changesByLabel(commitMessages) {
     // If there's a reference to a pull request
     if (commitMsg.match(/#\d+/)) {
       let prLabels = await labelsOnPr(commitMsg.match(/#(\d+)/)[1])
+      console.log("pr labels " + prLabels)
 
       prLabels.forEach(prLabel => {
         if (headingLabels.includes(prLabel)) {
