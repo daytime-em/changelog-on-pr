@@ -41,17 +41,18 @@ async function changesByLabel(commitMessages) {
         }
       })
     } 
+
     if (!added) {
       appendMessageByLabel(messagesByLabel, "improvements", commitMsg)
     }
   }) // commitMessages.forEach(...
 
-  messagesByLabel.keys().forEach(key => {
+  for (const key of messagesByLabel.keys()) {
     let values = messagesByLabel.get(key)
     values.forEach(value => {
       console.log(key + " : " + value)
     })
-  })
+  }
 }
 
 function appendMessageByLabel(messagesByLabel, label, message) {
