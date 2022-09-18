@@ -6,7 +6,7 @@ const owner = github.context.payload.repository.owner.login
 const repo = github.context.payload.repository.name
 
 function getPullNumber() {
-  var manualNumber = core.getInput('pull_number')
+  var manualNumber = core.getInsetput('pull_number')
   if (manualNumber) {
     return manualNumber
   } else {
@@ -56,11 +56,11 @@ async function changesByLabel(commitMessages) {
 
 function appendMessageByLabel(messagesByLabel, label, message) {
   if (!messagesByLabel.has(label)) {
-    messagesByLabel.put(label, [message])
+    messagesByLabel.set(label, [message])
   } else {
     let messages = messagesByLabel.get(label)
     messages += message
-    messagesByLabel.put(label, messages)
+    messagesByLabel.set(label, messages)
   }
 }
 
