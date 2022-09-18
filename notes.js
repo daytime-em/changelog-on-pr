@@ -49,7 +49,12 @@ async function main() {
     repo,
     pull_number: pullNumber
   })
-  var body = pr.body + "\n\n" + changelog
+  var body
+  if(pr.body) {
+    body = pr.body + "\n\n" + changelog
+  } else {
+    body = changelog
+  }
 
   await octokit.rest.pulls.update({
     owner,
