@@ -34,18 +34,21 @@ async function main() {
   })
   //console.log('I got a PR ' + JSON.stringify(pr))
 
-  let commits = await octokit.rest.pulls.listCommits({
-    owner,
-    repo,
-    pull_number: pullNumber
-  })
+  //let commits = await octokit.rest.pulls.listCommits({
+  //  owner,
+  //  repo,
+  //  pull_number: pullNumber
+  //})
+  let commits = await octokit.paginate( 
+    octokit.rest.pulls.listCommits, {
+      owner,
+      repo,
+      pull_number: pullNumber
+    } 
+  )
+  console.log('paginated commit list ' + commits)
   let commitMessages = commits.data.map(element => { return element.commit.message })
-  commitMessages.forEach(msg => { console.log('message ' + msg) })
-  commits.data.forEach(element => {
-    //console.log('element ' + element)
-    //console.log('element JSONned ' + JSON.stringify(element))
-    console.log('Commit: ' + element.commit.message)
-  });
+  commitMessages.forEach(msg => { console.log('found message ' + msg) })
   //console.log('Hey I downloaded a commit! ' + JSON.stringify(commits))
 
   // Fetch PR Commits
