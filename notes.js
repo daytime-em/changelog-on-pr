@@ -46,6 +46,7 @@ async function main() {
     repo,
     pull_number: pullNumber
   })
+  console.log("But like the pr body is " + pr.body)
   var body
   if (pr.body) {
     body = pr.body + "\n\n" + changelog
