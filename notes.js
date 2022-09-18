@@ -76,6 +76,7 @@ async function createChangelog(commitMessages) {
     body += capitalize(key)
     body += "\n\n"
     body += value
+    body += "\n\n"
   }
 
   return body
