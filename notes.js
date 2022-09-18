@@ -97,7 +97,7 @@ async function main() {
     pull_number: pullNumber
   })
   let commitMessages = commits.map(element => { return element.commit.message })
-  let changelog = createChangelog(commitMessages)
+  let changelog = await createChangelog(commitMessages)
 
   console.log("Adding Changelog:\n" + changelog)
 
