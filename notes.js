@@ -92,6 +92,10 @@ async function createChangelog(commitMessages) {
 }
 
 function formattedCategory(key, value) {
+  if(!value || value.length <= 0) {
+    return ""
+  }
+
   let body = ""
   body += "## "
   body += capitalize(key)
