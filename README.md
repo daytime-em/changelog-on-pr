@@ -1,10 +1,9 @@
 # Changelog on Release PRs
-Supports workflows where release branches are merged into master by adding
-release notes to opened pull requests. The release notes are generated from the first line of each commit in the PR.
+Adds a changelog to a Pull Request based on its commits. The release notes are generated from the first line of each commit in the PR, and can be oganized by label if desired.
 
 Technically this could be applied to any branch, but probably makes the most sense in workflows where a pull request is merged as part of the release process.
 
-The notes are formatted with simple markdown, and changes can be grouped by heading if desired.
+The notes are formatted with simple markdown, and changes can be grouped by heading if desired using labels.
 
 #### Example Output
 ```
