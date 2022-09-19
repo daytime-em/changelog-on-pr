@@ -38,8 +38,6 @@ async function changesByLabel(commitMessages) {
     // If there's a reference to a pull request
     if (commitMsg.match(/#\d+/)) {
       let prLabels = await labelsOnPr(commitMsg.match(/#(\d+)/)[1])
-      console.log("pr labels " + prLabels)
-
       prLabels.forEach(prLabel => {
         if (headingLabels.includes(prLabel)) {
           appendMessageByLabel(messagesByLabel, prLabel, commitMsg)
@@ -48,6 +46,7 @@ async function changesByLabel(commitMessages) {
       })
     }
 
+    // unlabeled changes should be called 'improvements'
     if (!added) {
       appendMessageByLabel(messagesByLabel, "improvements", commitMsg)
     }
@@ -73,11 +72,15 @@ async function createChangelog(commitMessages) {
   let changes = await changesByLabel(commitMessages)
   var body = ""
 
+  // Add each category based on the inputs
   for (const key of getHeadingLabels()) {
     let value = changes.get(key)
     body += formattedCategory(key, value)
   }
-  body += formattedCategory("improvements", changes.get("improvements"))
+  // If Improvements wasn't an input (affects heading order) then add it at the end for unlabeled changes
+  if (!getHeadingLabels().includes("improvements")) {
+    body += formattedCategory("improvements", changes.get("improvements"))
+  }
 
   return body
 }
