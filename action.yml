@@ -1,5 +1,10 @@
 name: "Add Release Notes from Pull Request Commits"
 description: 'Creates Release Notes from the commits of a Pull Request, and adds them to the body of the pull request.' 
+author: 'Emily Dixon'
+branding:
+  color: green
+  icon: align-left
+
 inputs:
   pull_number:
     description: "The number of the PR to generate notes for. You only need to specify this if you're calling from an event other than pull_request"
