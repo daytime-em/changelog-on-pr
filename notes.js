@@ -77,7 +77,9 @@ async function createChangelog(commitMessages) {
     let value = changes.get(key)
     body += formattedCategory(key, value)
   }
-  body += formattedCategory("improvements", changes.get("improvements"))
+  if (!changes.keys.includes("improvements")) {
+    body += formattedCategory("improvements", changes.get("improvements"))
+  }
 
   return body
 }
