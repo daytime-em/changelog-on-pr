@@ -18,7 +18,7 @@ The notes are formatted with simple markdown, and changes can be grouped by head
 ## Improvements
 
 * Improve performance during scenario lorem ipsum (#6)
-* Add Events for Use Case Dolor Quet (#3)
+* Add Events for Use Case Sit Amet (#3)
 ```
 
 ## Usage
