@@ -46,6 +46,7 @@ async function changesByLabel(commitMessages) {
       })
     }
 
+    // unlabeled changes should be called 'improvements'
     if (!added) {
       appendMessageByLabel(messagesByLabel, "improvements", commitMsg)
     }
@@ -71,10 +72,12 @@ async function createChangelog(commitMessages) {
   let changes = await changesByLabel(commitMessages)
   var body = ""
 
+  // Add each category based on the inputs
   for (const key of getHeadingLabels()) {
     let value = changes.get(key)
     body += formattedCategory(key, value)
   }
+  // If Improvements wasn't an input (affects heading order) then add it at the end for unlabeled changes
   if (!getHeadingLabels().includes("improvements")) {
     body += formattedCategory("improvements", changes.get("improvements"))
   }
