@@ -34,7 +34,7 @@ on:
   pull_request:
 # ... rest of workflow def 
 - name: Generate some release notes
-  uses: daytime-em/release-notes-on-pr@v0.1.0
+  uses: daytime-em/release-notes-on-pr@v1
   with:
     token: ${{ secrets.GITHUB_TOKEN }}
     labels: breaking,fixes
