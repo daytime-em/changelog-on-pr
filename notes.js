@@ -19,12 +19,18 @@ function getHeadingLabels() {
 }
 
 async function labelsOnPr(pull_number) {
-  let pr = await octokit.rest.pulls.get({
-    owner,
-    repo,
-    pull_number
-  })
-  return pr.data.labels.map(label => { return label.name.toLowerCase() })
+  try {
+    let pr = await octokit.rest.pulls.get({
+      owner,
+      repo,
+      pull_number
+    })
+    return pr.data.labels.map(label => { return label.name.toLowerCase() })
+  } catch (error) {
+    console.log("Couldn't fetch PR " + pull_number)
+    console.log(error)
+    return []
+  }
 }
 
 // Returns a map containing lists of change messages keyed by label/heading
