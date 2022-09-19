@@ -33,7 +33,6 @@ on:
   pull_request:
 # ... rest of workflow def 
 - name: Generate some release notes
-  id: notes
   uses: daytime-em/release-notes-on-pr@v0.1.0
   with:
     token: ${{ secrets.GITHUB_TOKEN }}
