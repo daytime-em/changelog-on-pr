@@ -75,7 +75,8 @@ function capitalize(string) {
 }
 
 async function createChangelog(commitMessages) {
-  let changes = await changesByLabel(commitMessages)
+  let firstLines = commitMessages.map(msg => { msg.split("\n")[0] })
+  let changes = await changesByLabel(firstLines)
   var body = ""
 
   // Add each category based on the inputs
