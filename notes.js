@@ -80,7 +80,7 @@ async function createChangelog(commitMessages) {
     console.log("msg " + msg)
     let coAuthorsOfCommit = msg
       .split("\n")
-      .filter(line => { return line.matches("Co-authored-by:") })
+      .filter(line => { return line.match(/Co-authored-by:/) })
       .map(line => {
         // Name Name Name <example@users.noreply.github.com>
         let emails = line.match(/Co-authored-by:.*<(.*)>/)
