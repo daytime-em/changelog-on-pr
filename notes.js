@@ -76,11 +76,11 @@ function capitalize(string) {
 
 async function createChangelog(commitMessages) {
   for(msg of commitMessages) {
-    console.log("msg $msg")
+    console.log("msg " + msg)
   }
   let firstLines = commitMessages.map(msg => { return msg.split("\n")[0] })
   for(line of firstLines) {
-    console.log("first line is $line")
+    console.log("first line is " + line)
   }
   let changes = await changesByLabel(firstLines)
   var body = ""
