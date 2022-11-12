@@ -85,10 +85,6 @@ async function createChangelog(commitMessages) {
   return body
 }
 
-let s = `    Co-authored-by: Tomislav Kordic <32546640+tomkordic@users.noreply.github.com>
-Co-authored-by: Jordan Rodgers <com6056@gmail.com>
-Co-authored-by: nbirkenshaw-mux <86244091+nbirkenshaw-mux@users.noreply.github.com>`
-
 async function main() {
   let pullNumber = getPullNumber()
   console.log(">release-notes-on-pr: Working on PR number " + pullNumber)
