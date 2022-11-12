@@ -75,7 +75,22 @@ function capitalize(string) {
 }
 
 async function createChangelog(commitMessages) {
-  let firstLines = commitMessages.map(msg => { msg.split("\n")[0] })
+  let coAuthors = new Map()
+  for(msg of commitMessages) {
+    let coAuthorsOfCommit = msg
+      .split("\n")
+      .filter(line => { return line.match(/Co-authored-by:/) })
+      .map(line => {
+        // Name Name Name <example@users.noreply.github.com>
+        let emails = line.match(/Co-authored-by:.*<(.*)>/)
+        return {email: emails[1], line: emails[0]}
+      })
+    for(const coAuthor of coAuthorsOfCommit) {
+      coAuthors.set(coAuthor.email, coAuthor.line)
+    }
+  }
+
+  let firstLines = commitMessages.map(msg => { return msg.split("\n")[0] })
   let changes = await changesByLabel(firstLines)
   var body = ""
 
@@ -87,6 +102,12 @@ async function createChangelog(commitMessages) {
   // If Improvements wasn't an input (affects heading order) then add it at the end for unlabeled changes
   if (!getHeadingLabels().includes("improvements")) {
     body += formattedCategory("improvements", changes.get("improvements"))
+  }
+
+  // Don't forget the co-authors!
+  for(const [email, msg] of coAuthors) {
+    body += msg
+    body += "\n"
   }
 
   return body
