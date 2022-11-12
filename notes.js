@@ -108,6 +108,12 @@ async function createChangelog(commitMessages) {
     body += formattedCategory("improvements", changes.get("improvements"))
   }
 
+  // Don't forget the co-authors!
+  for(const [email, msg] of coAuthors) {
+    body += msg
+    body += "\n"
+  }
+
   return body
 }
 
