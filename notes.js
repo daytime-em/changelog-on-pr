@@ -78,14 +78,17 @@ async function createChangelog(commitMessages) {
   let coAuthors = new Map()
   for(msg of commitMessages) {
     console.log("msg " + msg)
-    let authorsOfCommit = msg
+    let coAuthorsOfCommit = msg
       .split("\n")
-      .filter(line => { line.matches("Co-authored-by:") })
+      .filter(line => { return line.matches("Co-authored-by:") })
       .map(line => {
-        Co-authored-by: Tomislav Kordic <32546640+tomkordic@users.noreply.github.com>
-        Co-authored-by: Jordan Rodgers <com6056@gmail.com>
-        Co-authored-by: nbirkenshaw-mux <86244091+nbirkenshaw-mux@users.noreply.github.com> 
+        // Name Name Name <example@users.noreply.github.com>
+        let emails = line.match(/Co-authored-by:.*<(.*)>/)
+        return {email: emails[1], line: emails[0]}
       })
+      for(const coAuthor of coAuthorsOfCommit) {
+        coAuthors.set(coAuthor.email, coAuthor.line)
+      }
   }
 
   let firstLines = commitMessages.map(msg => { return msg.split("\n")[0] })
