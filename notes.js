@@ -75,9 +75,19 @@ function capitalize(string) {
 }
 
 async function createChangelog(commitMessages) {
+  let coAuthors = new Map()
   for(msg of commitMessages) {
     console.log("msg " + msg)
+    let authorsOfCommit = msg
+      .split("\n")
+      .filter(line => { line.matches("Co-authored-by:") })
+      .map(line => {
+        Co-authored-by: Tomislav Kordic <32546640+tomkordic@users.noreply.github.com>
+        Co-authored-by: Jordan Rodgers <com6056@gmail.com>
+        Co-authored-by: nbirkenshaw-mux <86244091+nbirkenshaw-mux@users.noreply.github.com> 
+      })
   }
+
   let firstLines = commitMessages.map(msg => { return msg.split("\n")[0] })
   for(line of firstLines) {
     console.log("first line is " + line)
