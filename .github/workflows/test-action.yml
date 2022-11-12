@@ -12,7 +12,7 @@ jobs:
         #   for a uses:
         uses: daytime-em/release-notes-on-pr@first-line
         with:
-          pull_number: 7
+          pull_number: 12
           token: ${{ secrets.GITHUB_TOKEN }}
           labels: breaking,fixes
       - name: Just echo something
