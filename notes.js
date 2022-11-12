@@ -75,10 +75,11 @@ function capitalize(string) {
 }
 
 async function createChangelog(commitMessages) {
-  commitMessages.onEach(msg => { console.log("msg $msg")})
+  for(msg of commitMessages) {
+    console.log("msg $msg")
+  }
   let firstLines = commitMessages.map(msg => { return msg.split("\n")[0] })
-  firstLines.onEach(msg => { console.log("line $msg")})
-  for(const line of firstLines) {
+  for(line of firstLines) {
     console.log("first line is $line")
   }
   let changes = await changesByLabel(firstLines)
