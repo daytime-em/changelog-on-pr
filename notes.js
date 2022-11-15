@@ -76,13 +76,15 @@ function capitalize(string) {
 
 async function createChangelog(commitMessages) {
   let coAuthors = new Map()
-  for(msg of commitMessages) {
+  for (msg of commitMessages) {
     msg.split("\n")
       .filter(line => { return line.match(/Co-authored-by:/) })
       .forEach(line => {
         // Name Name Name <example@users.noreply.github.com>
         let emails = line.match(/Co-authored-by:.*<(.*)>/)
-        coAuthors.set(emails[1], emails[0])
+        if (emails[1]) {
+          coAuthors.set(emails[1], emails[0])
+        }
       })
   }
 
@@ -104,7 +106,7 @@ async function createChangelog(commitMessages) {
 }
 
 function formattedCategory(key, value) {
-  if(!value || value.length <= 0) {
+  if (!value || value.length <= 0) {
     return ""
   }
 
