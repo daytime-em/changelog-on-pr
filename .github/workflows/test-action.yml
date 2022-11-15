@@ -10,7 +10,7 @@ jobs:
         # You have to update this with your branch when developing. 
         #   It doesn't look like you can use env, steps, or github contexts
         #   for a uses:
-        uses: daytime-em/release-notes-on-pr@main
+        uses: daytime-em/release-notes-on-pr@forEach
         with:
           pull_number: 12
           token: ${{ secrets.GITHUB_TOKEN }}
