@@ -77,7 +77,7 @@ function capitalize(string) {
 async function createChangelog(commitMessages) {
   let coAuthors = new Map()
   for(msg of commitMessages) {
-    let coAuthorsOfCommit = msg.split("\n")
+    msg.split("\n")
       .filter(line => { return line.match(/Co-authored-by:/) })
       .forEach(line => {
         // Name Name Name <example@users.noreply.github.com>
