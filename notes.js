@@ -85,7 +85,7 @@ async function createChangelog(commitMessages) {
         if (emails[1]) {
           coAuthors.set(emails[1], emails[0])
         } else {
-          coAuthors.set(line)
+          coAuthors.set(line, line)
         }
       })
   }
