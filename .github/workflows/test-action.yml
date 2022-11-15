@@ -5,15 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     name: Test the action
     steps:
+      - name: Warn them
+        run: echo "WARNING! You have to manually set which branch to test. If you don't, you'll be testing main. Sorry about that"
       - name: Generate some release notes
         id: notes
         # You have to update this with your branch when developing. 
         #   It doesn't look like you can use env, steps, or github contexts
         #   for a uses:
-        uses: daytime-em/release-notes-on-pr@forEach
+        uses: daytime-em/release-notes-on-pr@main
         with:
           pull_number: 12
           token: ${{ secrets.GITHUB_TOKEN }}
           labels: breaking,fixes
-      - name: Just echo something
-        run: echo "Anything "
