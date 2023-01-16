@@ -74,7 +74,7 @@ function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-async function fetchCoAuthors(commits) {
+function fetchCoAuthors(commits) {
   let linesByEmail = new Map()
 
   // Gather co-authors that might have been squashed in earlier merges
@@ -100,7 +100,7 @@ async function fetchCoAuthors(commits) {
   return Array.from(linesByEmail.values()).join("\n")
 }
 
-async function createChangelist(commitMessages) {
+async function createChangeList(commitMessages) {
   let firstLines = commitMessages.map(msg => { return msg.split("\n")[0] })
   let changes = await changesByLabel(firstLines)
   var body = ""
@@ -146,8 +146,8 @@ async function main() {
   })
   let commitMessages = commits.map(el => el.commit.message )
 
-  let changeList = await createChangelist(commitMessages)
-  let coAuthorsList = await fetchCoAuthors(commits.map(el => el.commit))
+  let changeList = await createChangeList(commitMessages)
+  let coAuthorsList = fetchCoAuthors(commits.map(el => el.commit))
   let changelog = changeList + "\n\n" + coAuthorsList
 
   console.log("Adding Changelog:\n" + changelog)
