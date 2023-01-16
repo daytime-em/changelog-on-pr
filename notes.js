@@ -96,6 +96,8 @@ async function fetchCoAuthors(commits) {
   let coAuthorLine = author => { `Co-authored-by: ${author.name} <${author.email}>` }
   commits.map(el => el.author).forEach(author => linesByEmail.set(author.email, coAuthorLine(author)))
   commits.map(el => el.committer).forEach(author => linesByEmail.set(author.email, coAuthorLine(author)))
+  commits.map(el => el.author).forEach(author => console.log(`theoretically appending: ${coAuthorLine(author)}`))
+  commits.map(el => el.committer).forEach(author => console.log(`theoretically appending: ${coAuthorLine(author)}`))
 
   return Array.from(linesByEmail.values()).join("\n")
 }
