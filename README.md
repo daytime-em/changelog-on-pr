@@ -1,7 +1,7 @@
 # Pretty-Printed Changelogs on PRs
 Adds a changelog to a Pull Request based on its commits. The release notes are generated from the first line of each commit in the PR, and can be oganized by label if desired. For Pull request that weren't labeled (or if no labels are provided for headings), changes will be grouped together as `Improvements`
 
-Technically this could be applied to any branch, but probably makes the most sense in workflows where a pull request is squash-merged as part of the release process, and your main branch has one commit per released version
+This is a good companion to release workflows that involve squash-merging a pull-request to a branch
 
 The notes are formatted with simple markdown, and changes can be grouped by heading if desired using labels.
 
