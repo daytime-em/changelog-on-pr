@@ -25,7 +25,7 @@ async function labelsOnPr(pull_number) {
       repo,
       pull_number
     })
-    return pr.data.labels.map(label => { return label.name.toLowerCase() })
+    return pr.data.labels.map(label => label.name.toLowerCase() )
   } catch (error) {
     console.log("Couldn't fetch PR " + pull_number)
     console.log(error)
@@ -80,7 +80,7 @@ async function fetchCoAuthors(commits) {
   // Gather co-authors that might have been squashed in earlier merges
   for (const msg of commits.map(el => el.message)) {
     msg.split("\n")
-      .filter(line => { return line.match(/Co-authored-by:/) })
+      .filter(line => line.match(/Co-authored-by:/) )
       .forEach(line => {
         // Name Name Name <example@users.noreply.github.com>
         let emails = line.match(/Co-authored-by:.*<(.*)>/)
@@ -93,7 +93,7 @@ async function fetchCoAuthors(commits) {
   }
 
   // Gather all the authors & committers of commits in this PR
-  let coAuthorLine = author => { `Co-authored-by: ${author.name} <${author.email}>` }
+  let coAuthorLine = author => `Co-authored-by: ${author.name} <${author.email}>` 
   commits.map(el => el.author).forEach(author => linesByEmail.set(author.email, coAuthorLine(author)))
   commits.map(el => el.committer).forEach(author => linesByEmail.set(author.email, coAuthorLine(author)))
   commits.map(el => el.author).forEach(author => console.log(`theoretically appending: ${coAuthorLine(author)}`))
