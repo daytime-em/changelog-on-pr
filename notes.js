@@ -96,7 +96,7 @@ async function fetchCoAuthors(commits) {
   let coAuthorLine = author => { `Co-authored-by: ${author.name} <${author.email}>` }
   commits.map(el => el.author).forEach(author => linesByEmail.set(author.email, coAuthorLine(author)))
 
-  return linesByEmail.map(el => el[1]).join("\n")
+  return linesByEmail.values().join("\n")
 }
 
 async function createChangelog(commitMessages) {
