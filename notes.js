@@ -94,8 +94,8 @@ function fetchCoAuthors(commits) {
 
   // Gather all the authors & committers of commits in this PR
   let coAuthorLine = author => `Co-authored-by: ${author.name} <${author.email}>` 
-  commits.map(el => el.author).forEach(author => linesByEmail.set(author.email, coAuthorLine(author)))
-  commits.map(el => el.committer).forEach(author => linesByEmail.set(author.email, coAuthorLine(author)))
+  commits.map(el => el.author).forEach(it => linesByEmail.set(it.email, coAuthorLine(it)))
+  commits.map(el => el.committer).forEach(it => linesByEmail.set(it.email, coAuthorLine(it)))
 
   return Array.from(linesByEmail.values()).join("\n")
 }
