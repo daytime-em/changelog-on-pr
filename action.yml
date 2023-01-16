@@ -1,4 +1,4 @@
-name: "Pretty-Prented Changelogs on PRs"
+name: "Pretty-Printed Changelogs on PRs"
 description: 'Creates a pretty-printed changelog from the commits of a Pull Request, and adds them to the body of that pull request.' 
 author: 'Emily Dixon'
 branding:
