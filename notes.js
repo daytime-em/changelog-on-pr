@@ -114,6 +114,8 @@ async function createChangelog(commitMessages) {
   if (!getHeadingLabels().includes("improvements")) {
     body += formattedCategory("improvements", changes.get("improvements"))
   }
+
+  return body
 }
 
 function formattedCategory(key, value) {
