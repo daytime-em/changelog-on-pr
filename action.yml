@@ -1,5 +1,5 @@
-name: "Add Release Notes from Pull Request Commits"
-description: 'Creates Release Notes from the commits of a Pull Request, and adds them to the body of the pull request.' 
+name: "Pretty-Prented Changelogs on PRs"
+description: 'Creates a pretty-printed changelog from the commits of a Pull Request, and adds them to the body of that pull request.' 
 author: 'Emily Dixon'
 branding:
   color: green

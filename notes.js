@@ -25,7 +25,7 @@ async function labelsOnPr(pull_number) {
       repo,
       pull_number
     })
-    return pr.data.labels.map(label => { return label.name.toLowerCase() })
+    return pr.data.labels.map(label => label.name.toLowerCase() )
   } catch (error) {
     console.log("Couldn't fetch PR " + pull_number)
     console.log(error)
@@ -74,22 +74,33 @@ function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-async function createChangelog(commitMessages) {
-  let coAuthors = new Map()
-  for (const msg of commitMessages) {
+async function fetchCoAuthors(commits) {
+  let linesByEmail = new Map()
+
+  // Gather co-authors that might have been squashed in earlier merges
+  for (const msg of commits.map(el => el.message)) {
     msg.split("\n")
-      .filter(line => { return line.match(/Co-authored-by:/) })
+      .filter(line => line.match(/Co-authored-by:/) )
       .forEach(line => {
         // Name Name Name <example@users.noreply.github.com>
         let emails = line.match(/Co-authored-by:.*<(.*)>/)
         if (emails[1]) {
-          coAuthors.set(emails[1], emails[0])
+          linesByEmail.set(emails[1], emails[0])
         } else {
-          coAuthors.set(line, line)
+          linesByEmail.set(line, line)
         }
       })
   }
 
+  // Gather all the authors & committers of commits in this PR
+  let coAuthorLine = author => `Co-authored-by: ${author.name} <${author.email}>` 
+  commits.map(el => el.author).forEach(author => linesByEmail.set(author.email, coAuthorLine(author)))
+  commits.map(el => el.committer).forEach(author => linesByEmail.set(author.email, coAuthorLine(author)))
+
+  return Array.from(linesByEmail.values()).join("\n")
+}
+
+async function createChangelog(commitMessages) {
   let firstLines = commitMessages.map(msg => { return msg.split("\n")[0] })
   let changes = await changesByLabel(firstLines)
   var body = ""
@@ -102,12 +113,6 @@ async function createChangelog(commitMessages) {
   // If Improvements wasn't an input (affects heading order) then add it at the end for unlabeled changes
   if (!getHeadingLabels().includes("improvements")) {
     body += formattedCategory("improvements", changes.get("improvements"))
-  }
-
-  // Don't forget the co-authors!
-  for (const [email, msg] of coAuthors) {
-    body += msg
-    body += "\n"
   }
 
   return body
@@ -139,8 +144,11 @@ async function main() {
     repo,
     pull_number: pullNumber
   })
-  let commitMessages = commits.map(element => { return element.commit.message })
-  let changelog = await createChangelog(commitMessages)
+  let commitMessages = commits.map(el => el.commit.message )
+
+  let changeList = await createChangelog(commitMessages)
+  let coAuthorsList = await fetchCoAuthors(commits.map(el => el.commit))
+  let changelog = changeList + "\n" + coAuthorsList
 
   console.log("Adding Changelog:\n" + changelog)
 
