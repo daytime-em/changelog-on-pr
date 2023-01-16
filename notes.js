@@ -100,7 +100,7 @@ async function fetchCoAuthors(commits) {
   return Array.from(linesByEmail.values()).join("\n")
 }
 
-async function createChangelog(commitMessages) {
+async function createChangelist(commitMessages) {
   let firstLines = commitMessages.map(msg => { return msg.split("\n")[0] })
   let changes = await changesByLabel(firstLines)
   var body = ""
@@ -146,9 +146,9 @@ async function main() {
   })
   let commitMessages = commits.map(el => el.commit.message )
 
-  let changeList = await createChangelog(commitMessages)
+  let changeList = await createChangelist(commitMessages)
   let coAuthorsList = await fetchCoAuthors(commits.map(el => el.commit))
-  let changelog = changeList + "\n" + coAuthorsList
+  let changelog = changeList + "\n\n" + coAuthorsList
 
   console.log("Adding Changelog:\n" + changelog)
 
